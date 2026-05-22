@@ -1,30 +1,43 @@
-import { APITester } from "./APITester";
+import { useRef } from "react";
+import Button from "./components/Button";
+import InputBox from "./components/InputBox";
 import "./index.css";
-
-import logo from "./logo.svg";
-import reactLogo from "./react.svg";
+import axios from "axios";
 
 export function App() {
-  return (
-    <div className="max-w-7xl mx-auto p-8 text-center relative z-10">
-      <div className="flex justify-center items-center gap-8 mb-8">
-        <img
-          src={logo}
-          alt="Bun Logo"
-          className="h-24 p-6 transition-all duration-300 hover:drop-shadow-[0_0_2em_#646cffaa] scale-120"
-        />
-        <img
-          src={reactLogo}
-          alt="React Logo"
-          className="h-24 p-6 transition-all duration-300 hover:drop-shadow-[0_0_2em_#61dafbaa] animate-[spin_20s_linear_infinite]"
-        />
-      </div>
+  const user1 = useRef<HTMLInputElement>(null);
+  const user2 = useRef<HTMLInputElement>(null);
 
-      <h1 className="text-5xl font-bold my-4 leading-tight">Bun + React</h1>
-      <p>
-        Edit <code className="bg-[#1a1a1a] px-2 py-1 rounded font-mono">src/App.tsx</code> and save to test HMR
-      </p>
-      <APITester />
+  function compare() {
+    const u1 = user1.current?.value.trim();
+    const u2 = user2.current?.value.trim();
+
+    if (!u1 || !u2) {
+      console.log("empty");
+      return;
+    }
+    console.log("2");
+  }
+
+  return (
+    <div className="flex justify-center items-center h-screen">
+      <div className="border border-neutral-300 rounded-md px-7 py-4">
+        <h1 className="text-2xl">Compare GitHub Users</h1>
+        <p className="text-sm text-neutral-400">
+          Enter two GitHub usernames to see a detailed side-by-side comparison
+        </p>
+        <div className="flex gap-4 my-5">
+          <div>
+            <h2>User 1</h2>
+            <InputBox user={user1} />
+          </div>
+          <div>
+            <h2>User 2</h2>
+            <InputBox user={user2} />
+          </div>
+        </div>
+        <Button onClick={compare} />
+      </div>
     </div>
   );
 }
