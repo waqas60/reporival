@@ -3,6 +3,7 @@ import Button from "./components/Button";
 import InputBox from "./components/InputBox";
 import "./index.css";
 import axios from "axios";
+import { Toaster, toast } from "sonner";
 
 export function App() {
   const user1 = useRef<HTMLInputElement>(null);
@@ -13,7 +14,7 @@ export function App() {
     const u2 = user2.current?.value.trim();
 
     if (!u1 || !u2) {
-      console.log("empty");
+      toast.error("Both input feilds are required");
       return;
     }
     console.log("2");
@@ -21,6 +22,7 @@ export function App() {
 
   return (
     <div className="flex justify-center items-center h-screen">
+      <Toaster />
       <div className="border border-neutral-300 rounded-md px-7 py-4">
         <h1 className="text-2xl">Compare GitHub Users</h1>
         <p className="text-sm text-neutral-400">
