@@ -5,6 +5,7 @@ import "./index.css";
 import axios from "axios";
 import { Toaster, toast } from "sonner";
 import GithubCard, { type GithubCardType } from "./components/GithubCard";
+import GithubComparisonTable from "./components/GithubTable";
 
 export function App() {
   const user1 = useRef<HTMLInputElement>(null);
@@ -22,11 +23,14 @@ export function App() {
     }
 
     try {
+      // toast.loading("fetching data")
       const response1 = await axios.get(`https://api.github.com/users/${u1}`);
       const response2 = await axios.get(`https://api.github.com/users/${u2}`);
       // console.log(response1.data);
       setUser1Data(response1.data);
       setUser2Data(response2.data);
+      // setUser1TotalRepos(response1.data.length);
+      // setUser2TotalRepos(response2.data.length);
     } catch (error) {
       toast.error("user not found");
     }
@@ -36,7 +40,7 @@ export function App() {
     <div className="flex justify-center items-center h-screen flex-col">
       <Toaster />
       <div className="border border-neutral-300 rounded-md px-7 py-4">
-        <h1 className="text-2xl">Compare GitHub Users</h1>
+        <h1 className="text-2xl font-bold">Compare GitHub Users</h1>
         <p className="text-sm text-neutral-400">
           Enter two GitHub usernames to see a detailed side-by-side comparison
         </p>
@@ -63,6 +67,7 @@ export function App() {
             bio={user1Data.bio}
             followers={user1Data.followers}
             following={user1Data.following}
+            public_repos={user1Data.public_repos}
           />
         )}
 
@@ -75,9 +80,13 @@ export function App() {
             bio={user2Data.bio}
             followers={user2Data.followers}
             following={user2Data.following}
+            public_repos={user2Data.public_repos}
           />
         )}
       </div>
+      {user1Data && user2Data && (
+        <GithubComparisonTable user1={user1Data} user2={user2Data} />
+      )}
     </div>
   );
 }
