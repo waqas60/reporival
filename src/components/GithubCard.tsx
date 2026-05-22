@@ -19,7 +19,7 @@ export default function GithubCard(props: GithubCardType) {
   });
 
   return (
-    <div className="border border-neutral-400 p-4 mt-4 rounded-md ">
+    <div className="border border-neutral-400 p-4 mt-4 rounded-md w-77">
       <div className="flex gap-2 items-center">
         <img
           src={props.avatar_url}

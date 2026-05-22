@@ -22,9 +22,11 @@ export function App() {
     }
 
     try {
-      const response = await axios.get(`https://api.github.com/users/${u1}`);
-      console.log(response.data);
-      setUser1Data(response.data);
+      const response1 = await axios.get(`https://api.github.com/users/${u1}`);
+      const response2 = await axios.get(`https://api.github.com/users/${u2}`);
+      // console.log(response1.data);
+      setUser1Data(response1.data);
+      setUser2Data(response2.data);
     } catch (error) {
       toast.error("user not found");
     }
@@ -51,7 +53,7 @@ export function App() {
         <Button onClick={compare} />
       </div>
 
-      <div className="w-70">
+      <div className="flex gap-4">
         {user1Data && (
           <GithubCard
             avatar_url={user1Data.avatar_url}
@@ -61,6 +63,18 @@ export function App() {
             bio={user1Data.bio}
             followers={user1Data.followers}
             following={user1Data.following}
+          />
+        )}
+
+        {user2Data && (
+          <GithubCard
+            avatar_url={user2Data.avatar_url}
+            name={user2Data.name}
+            login={user2Data.login}
+            created_at={user2Data.created_at}
+            bio={user2Data.bio}
+            followers={user2Data.followers}
+            following={user2Data.following}
           />
         )}
       </div>
